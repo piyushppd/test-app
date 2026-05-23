@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "NS Portal Login"
+version = "1.0.0"
+id = "artifacts/ns-portal"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23284
+
+[services.development]
+run = "pnpm --filter @workspace/ns-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ns-portal", "run", "build" ]
+publicDir = "artifacts/ns-portal/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23284"
+BASE_PATH = "/"
